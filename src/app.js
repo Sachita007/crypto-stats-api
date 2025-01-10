@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const helmet = require('helmet');
 const cors = require('cors');
 const { app: appConfig, db: dbConfig } = require('./config');
+const priceJob = require('./jobs/price.job');
 
 
 const app = express();
@@ -31,13 +32,16 @@ app.use('/', async (req, res) => {
 
 // Database connection
 mongoose
-    .connect(dbConfig.uri, dbConfig.options)
+    .connect(dbConfig.uri)
     .then(() => {
         console.log('MongoDB connected');
 
         // Start the server
         const server = app.listen(appConfig.port, () => {
             console.log(`Server running on port ${appConfig.port}`);
+
+            // Start the price update job
+            priceJob.start();
 
 
 

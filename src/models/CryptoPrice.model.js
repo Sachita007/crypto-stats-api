@@ -2,21 +2,21 @@
 const mongoose = require('mongoose');
 
 const cryptoPriceSchema = new mongoose.Schema({
-    "coinId": {
+    coinId: {
         type: String,
         required: true,
         enum: ['bitcoin', 'matic-network', 'ethereum'],
         index: true
     },
-    "price": {
+    price: {
         type: Number,
         required: true
     },
-    "marketCap": {
+    marketCap: {
         type: Number,
         required: true
     },
-    "24hChange": {
+    change24h: {
         type: Number,
         required: true
     }
