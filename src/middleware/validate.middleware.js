@@ -1,4 +1,4 @@
-const { app: supportedCoins } = require('./config');
+const { app: supportedCoins } = require('./../config');
 
 const validateCoin = (req, res, next) => {
     const { coin } = req.query;
@@ -9,3 +9,5 @@ const validateCoin = (req, res, next) => {
     }
     next();
 };
+
+module.exports = { validateCoin };
