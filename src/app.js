@@ -6,6 +6,9 @@ const helmet = require('helmet');
 const cors = require('cors');
 const { app: appConfig, db: dbConfig } = require('./config');
 const priceJob = require('./jobs/price.job');
+const errorHandler = require('./utils/errorHandler');
+
+
 
 
 const app = express();
@@ -30,6 +33,10 @@ app.use('/', async (req, res) => {
 
 
 
+// Error handling
+app.use(errorHandler);
+
+
 // Database connection
 mongoose
     .connect(dbConfig.uri)
@@ -50,7 +57,6 @@ mongoose
                 server.close(() => {
                     priceJob.stop();
                     mongoose.connection.close(false, () => {
-                        logger.info('Server shut down completely');
                         process.exit(0);
                     });
                 });

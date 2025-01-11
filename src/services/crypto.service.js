@@ -25,12 +25,12 @@ class CryptoService {
             const prices = await CryptoPrice.find({ coinId })
                 .sort({ createdAt: -1 })
                 .limit(100)
-                .select('priceUsd -_id')
+                .select('price -_id')
                 .lean();
 
             if (prices.length === 0) return null;
 
-            const values = prices.map(p => p.priceUsd);
+            const values = prices.map(p => p.price);
             const mean = values.reduce((a, b) => a + b) / values.length;
             const variance = values.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / values.length;
 
